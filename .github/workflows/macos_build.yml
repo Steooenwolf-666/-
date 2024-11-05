@@ -1,0 +1,36 @@
+name: Build macOS Executable
+
+on:
+  push:
+    branches:
+      - main  # 在主分支发生推送时触发
+  pull_request:
+    branches:
+      - main  # 在主分支发生 Pull Request 时触发
+
+jobs:
+  build:
+    runs-on: macos-latest  # 使用 GitHub 提供的 macOS 环境
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # 检出代码
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'  # 指定 Python 版本
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller  # 安装 PyInstaller
+
+    - name: Build Executable
+      run: pyinstaller --onefile --windowed 三角迷阵.py  # 使用 PyInstaller 打包
+
+    - name: Upload Executable
+      uses: actions/upload-artifact@v2
+      with:
+        name: triangle_solver-mac  # 上传构建产物
+        path: dist/  # 上传 dist 文件夹中的内容
