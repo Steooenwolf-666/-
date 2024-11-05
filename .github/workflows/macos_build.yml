@@ -14,10 +14,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # 使用 v3 版本，避免 Node.js 版本警告
+      uses: actions/checkout@v3  # 使用 v3 版本
 
     - name: Set up Python
-      uses: actions/setup-python@v4  # 使用 v4 版本，避免 Node.js 版本警告
+      uses: actions/setup-python@v4  # 使用 v4 版本
       with:
         python-version: '3.8'
 
@@ -27,7 +27,7 @@ jobs:
         pip install pyinstaller  # 安装 PyInstaller
 
     - name: Build Executable
-      run: pyinstaller --onefile --windowed ./三角迷阵.py  # 使用 PyInstaller 打包
+      run: pyinstaller --onefile --windowed --icon=app_icon.icns triangle_solver.py  # 使用自定义图标
 
     - name: Upload Executable
       uses: actions/upload-artifact@v3  # 使用最新的 v3 版本
